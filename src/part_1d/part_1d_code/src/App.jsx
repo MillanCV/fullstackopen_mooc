@@ -3,6 +3,7 @@ import { useState } from "react"
 const App = () => {
   const [clicks, setClicks] = useState({ left: 0, right: 0 })
   const [allClicks, setAll] = useState([])
+  const [total, setTotal] = useState(0)
 
   const handleLeftClick = () => {
     setAll(allClicks.concat('L'))
@@ -10,6 +11,8 @@ const App = () => {
       ...clicks,
       left: clicks.left + 1,
     })
+
+    setTotal(clicks.left + clicks.right)
   }
 
   const handleRightClick = () => {
@@ -18,6 +21,7 @@ const App = () => {
       ...clicks,
       right: clicks.right + 1
     })
+    setTotal(clicks.left + clicks.right)
   }
 
   return (
@@ -31,6 +35,7 @@ const App = () => {
       </button>
       {clicks.right}
       <p>{allClicks.join(' ')}</p>
+      <p>Total clicks: {total}</p>
     </div>
   )
 }
