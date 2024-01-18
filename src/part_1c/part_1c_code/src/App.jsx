@@ -4,7 +4,7 @@ const Display = ({ counter }) => <div>{counter}</div>
 
 const Button = (props) => {
   return (
-    <button onClick={props.onCLick}>
+    <button onClick={props.onClick}>
       {props.text}
     </button>
   )
@@ -24,6 +24,8 @@ const App = () => {
     <div>
       <Display counter={counter} />
       <Button onClick={increaseByOne} text="plus" />
+      <Button onClick={decreaseByOne} text="minus" />
+      <Button onClick={setToZero} text="zero" />
     </div>
   )
 }
