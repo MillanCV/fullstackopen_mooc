@@ -1,7 +1,11 @@
 import { useState } from 'react'
 
-const Button = ({ handleClick, text }) => {
-  return <button onClick={handleClick}>{text}</button>
+const Button = ({ handleClick, text }) => <button onClick={handleClick}>{text}</button>
+
+const StatisticLine = ({ text, value }) => {
+  if (text === "positive") return <tr>{text} {value}%</tr>
+
+  return <tr>{text} {value}</tr>
 }
 
 const Statistic = ({ good, neutral, bad }) => {
@@ -16,14 +20,14 @@ const Statistic = ({ good, neutral, bad }) => {
   }
 
   return (
-    <>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {all}</p>
-      <p>average {average}</p>
-      <p>positive {positive_percentage}%</p>
-    </>
+    <table>
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
+      <StatisticLine text="all" value={all} />
+      <StatisticLine text="average" value={average} />
+      <StatisticLine text="positive" value={positive_percentage} />
+    </table>
   )
 
 }
@@ -36,31 +40,7 @@ const App = () => {
 
 
 
-  const setValue = (value, setValue) => () => {
-    /* const new_val = value + 1
-    const new_all = all + 1
-    let positive = good
-
-    setAll(new_all) */
-    setValue(value + 1)
-
-    /* 
-    let score = good - bad
-    if (setValue === setBad) {
-      score -= new_val
-    }
-    else if (setValue === setGood) {
-      score += new_val
-      positive += 1
-
-    }
-
-    setAverage(score / (new_all))
-    setPositive((positive / new_all) * 100)
-    */
-
-
-  }
+  const setValue = (value, setValue) => () => setValue(value + 1)
 
   return (
     <div>
