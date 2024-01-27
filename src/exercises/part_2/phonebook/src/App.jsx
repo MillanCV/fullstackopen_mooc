@@ -1,18 +1,25 @@
 import { useState } from 'react'
+import PersonForm from './components/Personform'
+import Persons from './components/Persons'
+import Phonebook from './components/Phonebook'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: "299208" }
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
   ])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [newFilter, setNewFilter] = useState('')
 
   const handleSubmitName = (event) => {
     event.preventDefault()
 
-    function containsObjectWithName(name) {
+    function containsObjectWithName(name, number) {
       for (var i = 0; i < persons.length; i++) {
-        if (persons[i].name === name) {
+        if (persons[i].name === name && persons[i].number === number) {
           return true;
         }
       }
@@ -36,20 +43,18 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
+  const handleChangeFilter = (event) => setNewFilter(event.target.value)
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={handleSubmitName}>
-        <div>
-          name: <input value={newName} onChange={handleNameChange} />
-        </div>
-        <div>number: <input value={newNumber} onChange={handleNumberChange} /></div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Phonebook newFilter={newFilter} handleChangeFilter={handleChangeFilter} />
+
+      <h2>add a new</h2>
+      <PersonForm newName={newName} newNumber={newNumber} handleSubmitName={handleSubmitName} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} />
+
       <h2>Numbers</h2>
-      {persons.map(person => <p>{person.name} {person.number}</p>)}
+      <Persons persons={persons} newFilter={newFilter} />
     </div>
   )
 }
