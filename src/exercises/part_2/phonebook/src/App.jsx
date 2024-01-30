@@ -23,7 +23,7 @@ const App = () => {
   const handleSubmitName = (event) => {
     event.preventDefault()
 
-    function containsObjectWithName(name, number) {
+    function sameNameSameNumber(name, number) {
       for (var i = 0; i < persons.length; i++) {
         if (persons[i].name === name && persons[i].number === number) {
           return true;
@@ -32,7 +32,35 @@ const App = () => {
       return false;
     }
 
-    if (!containsObjectWithName(newName, newNumber)) {
+    function sameNameDifferentNumber(name, number) {
+      for (var i = 0; i < persons.length; i++) {
+        if (persons[i].name === name && persons[i].number !== number) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    if (sameNameDifferentNumber(newName, newNumber)) {
+      if (window.confirm(`${newName} is already added to the phonebook, replace the old number with a new one?`)) {
+        const person = persons.find(n => n.name === newName)
+        const changedPerson = { ...person, number: newNumber }
+
+        personService
+          .update(person.id, changedPerson)
+          .then(returnedPerson => {
+            setPersons(persons.map(p => p.name !== newName ? p : returnedPerson))
+          })
+          .catch(error => {
+            alert(
+              `the person '${person.name}' was already deleted from server`
+            )
+            setPersons(persons.filter(p => p.name !== newName))
+          })
+
+      }
+    }
+    else if (!sameNameSameNumber(newName, newNumber)) {
       const personObject = {
         name: newName,
         number: newNumber
@@ -46,9 +74,8 @@ const App = () => {
           setNewNumber("")
 
         })
-
-
     }
+
     else {
       alert(`${newName} and ${newNumber} are already added to phonebook`)
     }
