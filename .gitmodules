@@ -4,3 +4,6 @@
 [submodule "notes-back"]
 	path = notes-back
 	url = git@github.com:MillanCV/notes-back.git
+[submodule "notes-front"]
+	path = notes-front
+	url = git@github.com:MillanCV/notes-front.git
