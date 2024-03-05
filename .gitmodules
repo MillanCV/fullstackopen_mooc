@@ -1,3 +1,6 @@
 [submodule "fullstackopen_exercise_lesson_3"]
 	path = fullstackopen_exercise_lesson_3
 	url = git@github.com:MillanCV/fullstackopen_exercise_lesson_3.git
+[submodule "notes-back"]
+	path = notes-back
+	url = git@github.com:MillanCV/notes-back.git
